@@ -7,10 +7,10 @@ class App extends Component {
 	state = {
 		persons: [
 			{
-				name: "Max",
+				name: "Manu",
 				age: 28,
 			},
-			{ name: " Marry", age: 21 },
+			{ name: " Weronika", age: 21 },
 
 			{ name: " Waldek", age: 20 },
 		],
@@ -26,6 +26,34 @@ class App extends Component {
 					age: 28,
 				},
 				{ name: " Weronika", age: 21 },
+
+				{ name: " Waldek", age: 20 },
+			],
+		});
+	};
+
+	nameChangedHandler = event => {
+		this.setState({
+			persons: [
+				{
+					name: "Manu",
+					age: 28,
+				},
+				{ name: event.target.value, age: 21 },
+
+				{ name: " Waldek", age: 20 },
+			],
+		});
+	};
+
+	ageChangedHandler = event => {
+		this.setState({
+			persons: [
+				{
+					name: "Manu",
+					age: 28,
+				},
+				{ name: "Weronika", age: event.target.value },
 
 				{ name: " Waldek", age: 20 },
 			],
@@ -47,6 +75,8 @@ class App extends Component {
 					name={this.state.persons[1].name}
 					age={this.state.persons[1].age}
 					click={this.switchNameHandler.bind(this, "Max!")}
+					changed={this.nameChangedHandler}
+					changed_1={this.ageChangedHandler}
 				>
 					My Hobbies: Racing
 				</Person>
