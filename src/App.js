@@ -1,28 +1,28 @@
-/* eslint-disable react-hooks/rules-of-hooks */
-import React, { useState } from "react";
+import React, { Component } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import Person from "./Person/Person";
 
-const app = props => {
-	const [personsState, setPersonsState] = useState({
+class App extends Component {
+	state = {
 		persons: [
 			{
 				name: "Max",
 				age: 28,
 			},
-			{ name: " Weronika", age: 21 },
+			{ name: " Marry", age: 21 },
+
 			{ name: " Waldek", age: 20 },
 		],
-		otherState: "some other value",
-	});
-
-	const [otherState, setotherState] = useState("some other value");
-	const switchNameHandler = () => {
-		setPersonsState({
+		otherState: "Some other value",
+	};
+	switchNameHandler = newName => {
+		// console.log("Was Clicked!");
+		//don't do this this.state.persons[0].name = "Maximilian";
+		this.setState({
 			persons: [
 				{
-					name: "Maximilian",
+					name: newName,
 					age: 28,
 				},
 				{ name: " Weronika", age: 21 },
@@ -31,27 +31,32 @@ const app = props => {
 			],
 		});
 	};
+	render() {
+		return (
+			<div className="App">
+				<h1>Hi, I'm a React App</h1>
+				<p>This is really working!</p>
+				<button onClick={() => this.switchNameHandler(`Waldek`)}>
+					Switch Name
+				</button>
+				<Person
+					name={this.state.persons[0].name}
+					age={this.state.persons[0].age}
+				/>
+				<Person
+					name={this.state.persons[1].name}
+					age={this.state.persons[1].age}
+					click={this.switchNameHandler.bind(this, "Max!")}
+				>
+					My Hobbies: Racing
+				</Person>
+				<Person
+					name={this.state.persons[2].name}
+					age={this.state.persons[2].age}
+				/>
+			</div>
+		);
+	}
+}
 
-	return (
-		<div className="App">
-			<h1>Hi, I'm a React App</h1>
-			<p>This is really working!</p>
-			<button onClick={switchNameHandler}>Switch Name</button>
-			<Person
-				name={personsState.persons[0].name}
-				age={personsState.persons[0].age}
-			/>
-			<Person
-				name={personsState.persons[1].name}
-				age={personsState.persons[1].age}
-			>
-				My Hobbies: Racing
-			</Person>
-			<Person
-				name={personsState.persons[2].name}
-				age={personsState.persons[2].age}
-			/>
-		</div>
-	);
-};
-export default app;
+export default App;
