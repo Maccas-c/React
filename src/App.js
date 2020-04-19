@@ -1,25 +1,26 @@
-import React, { Component } from "react";
+/* eslint-disable react-hooks/rules-of-hooks */
+import React, { useState } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import Person from "./Person/Person";
 
-class App extends Component {
-	state = {
+const app = props => {
+	const [personsState, setPersonsState] = useState({
 		persons: [
 			{
 				name: "Max",
 				age: 28,
 			},
-			{ name: " Marry", age: 21 },
-
+			{ name: " Weronika", age: 21 },
 			{ name: " Waldek", age: 20 },
 		],
-		otherState: "Some other value",
-	};
-	switchNameHandler = () => {
-		// console.log("Was Clicked!");
-		//don't do this this.state.persons[0].name = "Maximilian";
-		this.setState({
+		otherState: "some other value",
+	});
+
+	console.log(personsState);
+
+	const switchNameHandler = () => {
+		setPersonsState({
 			persons: [
 				{
 					name: "Maximilian",
@@ -31,29 +32,27 @@ class App extends Component {
 			],
 		});
 	};
-	render() {
-		return (
-			<div className="App">
-				<h1>Hi, I'm a React App</h1>
-				<p>This is really working!</p>
-				<button onClick={this.switchNameHandler}>Switch Name</button>
-				<Person
-					name={this.state.persons[0].name}
-					age={this.state.persons[0].age}
-				/>
-				<Person
-					name={this.state.persons[1].name}
-					age={this.state.persons[1].age}
-				>
-					My Hobbies: Racing
-				</Person>
-				<Person
-					name={this.state.persons[2].name}
-					age={this.state.persons[2].age}
-				/>
-			</div>
-		);
-	}
-}
 
-export default App;
+	return (
+		<div className="App">
+			<h1>Hi, I'm a React App</h1>
+			<p>This is really working!</p>
+			<button onClick={switchNameHandler}>Switch Name</button>
+			<Person
+				name={personsState.persons[0].name}
+				age={personsState.persons[0].age}
+			/>
+			<Person
+				name={personsState.persons[1].name}
+				age={personsState.persons[1].age}
+			>
+				My Hobbies: Racing
+			</Person>
+			<Person
+				name={personsState.persons[2].name}
+				age={personsState.persons[2].age}
+			/>
+		</div>
+	);
+};
+export default app;
