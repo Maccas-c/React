@@ -18,20 +18,11 @@ class App extends Component {
 		otherState: "Some other value",
 		showPersons: false,
 	};
-	switchNameHandler = newName => {
-		// console.log("Was Clicked!");
-		//don't do this this.state.persons[0].name = "Maximilian";
-		this.setState({
-			persons: [
-				{
-					name: newName,
-					age: 28,
-				},
-				{ name: " Weronika", age: 21 },
-
-				{ name: " Waldek", age: 20 },
-			],
-		});
+	deletePersonHandler = personIndex => {
+		// const persons = this.state.persons.slice(); // cut array
+		const persons = [...this.state.persons]; // ES6 SPREAD
+		persons.splice(personIndex, 1);
+		this.setState({ persons: persons });
 	};
 
 	nameChangedHandler = event => {
@@ -65,8 +56,14 @@ class App extends Component {
 		if (this.state.showPersons) {
 			persons = (
 				<div>
-					{this.state.persons.map(person => {
-						return <Person name={person.name} age={person.age} />;
+					{this.state.persons.map((person, index) => {
+						return (
+							<Person
+								name={person.name}
+								age={person.age}
+								click={() => this.deletePersonHandler(index)}
+							/>
+						);
 					})}
 				</div>
 			);
