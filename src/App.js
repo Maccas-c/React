@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
 import Person from "./Person/Person";
-
+import Currency from "./Person/Currency";
 class App extends Component {
 	state = {
 		persons: [
@@ -12,6 +12,13 @@ class App extends Component {
 		],
 		otherState: "some other value",
 		showPersons: false,
+		showcurrency: false,
+		currency: [
+			{ id: "asdf1212", currency: "EURO", prize: 5 },
+			{ id: "asdf1212", currency: "USD", prize: 4.5 },
+			{ id: "asdf1212", currency: "FUNT", prize: 6 },
+		],
+		showbutton: false,
 	};
 
 	nameChangedHandler = (event, id) => {
@@ -33,18 +40,24 @@ class App extends Component {
 		this.setState({ persons: persons });
 	};
 
-	deletePersonHandler = personIndex => {
-		// const persons = this.state.persons.slice();
-		const persons = [...this.state.persons];
-		persons.splice(personIndex, 1);
-		this.setState({ persons: persons });
-	};
+	// deletePersonHandler = personIndex => {
+	// 	// const persons = this.state.persons.slice();
+	// 	const persons = [...this.state.persons];
+	// 	persons.splice(personIndex, 1);
+	// 	this.setState({ persons: persons });
+	// };
 
 	togglePersonsHandler = () => {
 		const doesShow = this.state.showPersons;
 		this.setState({ showPersons: !doesShow });
 	};
 
+	toggleCurrencyHandler = () => {
+		const doesShow = this.state.showcurrency;
+		this.setState({ showcurrency: !doesShow });
+	};
+
+	togglePersonCurrencyHandler = () => {};
 	render() {
 		const style = {
 			backgroundColor: "green",
@@ -58,6 +71,21 @@ class App extends Component {
 			// 	color: "black",
 			// },
 		};
+		let currency = null;
+
+		if (this.state.showcurrency) {
+			currency = (
+				<div>
+					{this.state.currency.map(currency => (
+						<Currency
+							currency={currency.currency}
+							value={currency.prize}
+							key={currency.id}
+						/>
+					))}
+				</div>
+			);
+		}
 
 		let persons = null;
 
@@ -67,7 +95,7 @@ class App extends Component {
 					{this.state.persons.map((person, index) => {
 						return (
 							<Person
-								click={() => this.deletePersonHandler(index)}
+								// click={() => this.deletePersonHandler(index)}
 								name={person.name}
 								age={person.age}
 								key={person.id}
@@ -98,9 +126,14 @@ class App extends Component {
 				<h1>Hi, I'm a React App</h1>
 				<p className={classes.join(" ")}>This is really working!</p>
 				<button style={style} onClick={this.togglePersonsHandler}>
-					Toggle Persons
+					Toggle Persons/Currenc
 				</button>
+				<button style={style} onClick={this.toggleCurrencyHandler}>
+					Toggle Currency
+				</button>
+
 				{persons}
+				{currency}
 			</div>
 		);
 		// return React.createElement('div', {className: 'App'}, React.createElement('h1', null, 'Does this work now?'));
